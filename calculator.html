@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator {
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+            width: 320px;
+        }
+        .display {
+            background: linear-gradient(90deg, #232526 0%, #485563 100%);
+            color: #fff;
+            font-size: 2em;
+            border-radius: 10px;
+            padding: 20px 10px;
+            text-align: right;
+            margin-bottom: 20px;
+            min-height: 40px;
+            word-break: break-all;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        button {
+            padding: 20px 0;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #434343 0%, #262626 100%);
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+        }
+        button.operator {
+            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            color: #fff;
+        }
+        button.equal {
+            background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+            color: #222;
+            font-weight: bold;
+            grid-column: span 2;
+        }
+        button.clear {
+            background: linear-gradient(135deg, #ff5858 0%, #f09819 100%);
+            color: #fff;
+            font-weight: bold;
+        }
+        button:active {
+            transform: scale(0.97);
+            filter: brightness(0.95);
+        }
+        @media (max-width: 400px) {
+            .calculator {
+                width: 95vw;
+                padding: 15px 5px;
+            }
+            .display {
+                font-size: 1.2em;
+                padding: 12px 5px;
+            }
+            button {
+                padding: 12px 0;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button onclick="appendValue('(')">(</button>
+            <button onclick="appendValue(')')">)</button>
+            <button class="operator" onclick="appendValue('/')">÷</button>
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button class="operator" onclick="appendValue('*')">×</button>
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button class="operator" onclick="appendValue('-')">−</button>
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button class="operator" onclick="appendValue('+')">+</button>
+            <button onclick="appendValue('0')">0</button>
+            <button onclick="appendValue('.')">.</button>
+            <button class="equal" onclick="calculateResult()">=</button>
+        </div>
+    </div>
+    <script>
+        let display = document.getElementById('display');
+        let currentInput = '';
+
+        function appendValue(val) {
+            if (display.innerText === '0' && val !== '.') {
+                currentInput = '';
+            }
+            currentInput += val;
+            display.innerText = currentInput;
+        }
+
+        function clearDisplay() {
+            currentInput = '';
+            display.innerText = '0';
+        }
+
+        function calculateResult() {
+            try {
+                // Evaluate the expression safely
+                let result = eval(currentInput);
+                display.innerText = result;
+                currentInput = result.toString();
+            } catch {
+                display.innerText = 'Error';
+                currentInput = '';
+            }
+        }
+    </script>
+</body>
+</html>
