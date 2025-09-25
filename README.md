@@ -1,3 +1,3 @@
 # osib
-calculator
+calculator,
 simple landing page
